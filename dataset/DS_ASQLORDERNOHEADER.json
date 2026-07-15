@@ -1,0 +1,27 @@
+{
+	"name": "DS_ASQLORDERNOHEADER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ColumnNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ColumnName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "OrdersMapping"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

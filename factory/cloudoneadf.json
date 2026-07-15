@@ -1,0 +1,15 @@
+{
+	"name": "cloudoneadf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7f20d83a-4305-4b94-9432-acb14aba31de",
+		"tenantId": "b3bf6e8b-8fc9-419d-9447-ed6285fa98cd"
+	}
+}

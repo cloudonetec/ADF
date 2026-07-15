@@ -1,0 +1,17 @@
+{
+	"name": "DS_SQLDerivedColumn",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblOrderNewDerivedCol"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

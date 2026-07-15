@@ -1,0 +1,17 @@
+{
+	"name": "DS_ASQLOrderNew",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblOrderNew"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
