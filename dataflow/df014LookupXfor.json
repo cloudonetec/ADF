@@ -1,0 +1,97 @@
+{
+	"name": "df014LookupXfor",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_LookupCsvXfor",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsvSales"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CsvProductsLookup",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsvProducts"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSVCustomerLookup",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsvCustomers"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "sinkdata"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookupProducts"
+				},
+				{
+					"name": "lookupCustomer"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductKey as short,",
+				"          CustomerKey as short,",
+				"          SalesAmount as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsvSales",
+				"source(output(",
+				"          ProductKey as short,",
+				"          EnglishProductName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsvProducts",
+				"source(output(",
+				"          CustomerKey as short,",
+				"          FullName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsvCustomers",
+				"ReadCsvSales, ReadCsvProducts lookup(ReadCsvSales@ProductKey == ReadCsvProducts@ProductKey,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupProducts",
+				"lookupProducts, ReadCsvCustomers lookup(ReadCsvSales@CustomerKey == ReadCsvCustomers@CustomerKey,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupCustomer",
+				"lookupCustomer sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ProductKey = ReadCsvSales@ProductKey,",
+				"          CustomerKey = ReadCsvSales@CustomerKey,",
+				"          SalesAmount,",
+				"          EnglishProductName,",
+				"          FullName",
+				"     )) ~> sinkdata"
+			]
+		}
+	}
+}
