@@ -1,0 +1,99 @@
+{
+	"name": "df014JoinXfor",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CSVJoinXfor",
+						"type": "DatasetReference"
+					},
+					"name": "ReadSalesCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSVJoinXforProduct",
+						"type": "DatasetReference"
+					},
+					"name": "ReadProductsCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSVJoinProduct",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsvCustomer"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQLJoinXfor",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "joindata"
+				},
+				{
+					"name": "joinCustomers"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductKey as short,",
+				"          CustomerKey as short,",
+				"          SalesAmount as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadSalesCsv",
+				"source(output(",
+				"          ProductKey as short,",
+				"          EnglishProductName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadProductsCsv",
+				"source(output(",
+				"          CustomerKey as short,",
+				"          FullName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsvCustomer",
+				"ReadSalesCsv, ReadProductsCsv join(ReadSalesCsv@ProductKey == ReadProductsCsv@ProductKey,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joindata",
+				"joindata, ReadCsvCustomer join(ReadSalesCsv@CustomerKey == ReadCsvCustomer@CustomerKey,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinCustomers",
+				"joinCustomers sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ProductKey = ReadSalesCsv@ProductKey,",
+				"          CustomerKey = ReadSalesCsv@CustomerKey,",
+				"          SalesAmount,",
+				"          EnglishProductName,",
+				"          FullName",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
