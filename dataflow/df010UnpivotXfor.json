@@ -12,7 +12,15 @@
 					"name": "ReadCsv"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQLUnpivot",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "unpivotdata"
@@ -29,10 +37,22 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> ReadCsv",
 				"ReadCsv unpivot(output(",
-				"          ",
+				"          Country as string,",
+				"          SalesAmount as double",
 				"     ),",
+				"     ungroupBy(EnglishProductName),",
 				"     lateral: true,",
-				"     ignoreNullPivots: false) ~> unpivotdata"
+				"     ignoreNullPivots: true) ~> unpivotdata",
+				"unpivotdata sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink"
 			]
 		}
 	}
