@@ -7775,6 +7775,303 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ppl034JoinXfor')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df014JoinXfor",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ReadSalesCsv": {},
+									"ReadProductsCsv": {},
+									"ReadCsvCustomer": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Transformations"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df014JoinXfor')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df014JoinXfor')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_CSVJoinXfor",
+								"type": "DatasetReference"
+							},
+							"name": "ReadSalesCsv"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_CSVJoinXforProduct",
+								"type": "DatasetReference"
+							},
+							"name": "ReadProductsCsv"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_CSVJoinProduct",
+								"type": "DatasetReference"
+							},
+							"name": "ReadCsvCustomer"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQLJoinXfor",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "joindata"
+						},
+						{
+							"name": "joinCustomers"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ProductKey as short,",
+						"          CustomerKey as short,",
+						"          SalesAmount as double",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadSalesCsv",
+						"source(output(",
+						"          ProductKey as short,",
+						"          EnglishProductName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadProductsCsv",
+						"source(output(",
+						"          CustomerKey as short,",
+						"          FullName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadCsvCustomer",
+						"ReadSalesCsv, ReadProductsCsv join(ReadSalesCsv@ProductKey == ReadProductsCsv@ProductKey,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> joindata",
+						"joindata, ReadCsvCustomer join(ReadSalesCsv@CustomerKey == ReadCsvCustomer@CustomerKey,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> joinCustomers",
+						"joinCustomers sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ProductKey = ReadSalesCsv@ProductKey,",
+						"          CustomerKey = ReadSalesCsv@CustomerKey,",
+						"          SalesAmount,",
+						"          EnglishProductName,",
+						"          FullName",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_CSVJoinXfor')]",
+				"[concat(variables('factoryId'), '/datasets/DS_CSVJoinXforProduct')]",
+				"[concat(variables('factoryId'), '/datasets/DS_CSVJoinProduct')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SQLJoinXfor')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_CSVJoinXfor')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Sales.csv",
+						"folderPath": "LookUp",
+						"fileSystem": "cloudonestorage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "String"
+					},
+					{
+						"name": "CustomerKey",
+						"type": "String"
+					},
+					{
+						"name": "SalesAmount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_CSVJoinXforProduct')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Products.csv",
+						"folderPath": "LookUp",
+						"fileSystem": "cloudonestorage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "String"
+					},
+					{
+						"name": "EnglishProductName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_CSVJoinProduct')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Customers.csv",
+						"folderPath": "LookUp",
+						"fileSystem": "cloudonestorage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "CustomerKey",
+						"type": "String"
+					},
+					{
+						"name": "FullName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQLJoinXfor')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tblJoinXfor"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
+			]
 		}
 	]
 }
