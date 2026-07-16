@@ -1,0 +1,69 @@
+{
+	"name": "df014UnionXfor",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CsvUnionXfor",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CsvUnionXfor1",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCSV1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQLUnionXfor",
+						"type": "DatasetReference"
+					},
+					"name": "sinkUnion"
+				}
+			],
+			"transformations": [
+				{
+					"name": "uniondata"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EMPID as short,",
+				"          EMPNAME as string,",
+				"          SALARY as integer,",
+				"          Month as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsv",
+				"source(output(",
+				"          EMPLOYEENAME as short,",
+				"          EMPLOYENAME as string,",
+				"          EMPSALARY as integer,",
+				"          Monthname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCSV1",
+				"ReadCsv, ReadCSV1 union(byName: false)~> uniondata",
+				"uniondata sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkUnion"
+			]
+		}
+	}
+}

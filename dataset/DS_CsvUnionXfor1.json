@@ -1,0 +1,40 @@
+{
+	"name": "DS_CsvUnionXfor1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Set2.csv",
+				"fileSystem": "cloudonestorage"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "EMPLOYEENAME",
+				"type": "String"
+			},
+			{
+				"name": "EMPLOYENAME",
+				"type": "String"
+			},
+			{
+				"name": "EMPSALARY",
+				"type": "String"
+			},
+			{
+				"name": "Monthname",
+				"type": "String"
+			}
+		]
+	}
+}
