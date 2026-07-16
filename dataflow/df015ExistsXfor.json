@@ -1,0 +1,68 @@
+{
+	"name": "df015ExistsXfor",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_CsvExistsXfor",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_CSVExistsProducts",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsvProduct"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQLExistsXfor",
+						"type": "DatasetReference"
+					},
+					"name": "sinkdata"
+				}
+			],
+			"transformations": [
+				{
+					"name": "existsdata"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductKey as short,",
+				"          CustomerKey as short,",
+				"          SalesAmount as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsv",
+				"source(output(",
+				"          ProductKey as short,",
+				"          EnglishProductName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadCsvProduct",
+				"ReadCsv, ReadCsvProduct exists(ReadCsv@ProductKey == ReadCsvProduct@ProductKey,",
+				"     negate:false,",
+				"     broadcast: 'auto')~> existsdata",
+				"existsdata sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkdata"
+			]
+		}
+	}
+}
