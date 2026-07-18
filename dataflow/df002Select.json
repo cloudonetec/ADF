@@ -23,7 +23,7 @@
 			],
 			"transformations": [
 				{
-					"name": "selectcolumns"
+					"name": "selectColumn"
 				}
 			],
 			"scriptLines": [
@@ -40,13 +40,13 @@
 				"     ignoreNoFilesFound: false) ~> ReadCsv",
 				"ReadCsv select(mapColumn(",
 				"          OrderDate,",
-				"          Country,",
+				"          ProductKey,",
 				"          EnglishProductName,",
-				"          SalesAmount",
+				"          TaxAmt",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> selectcolumns",
-				"ReadCsv sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumn",
+				"selectColumn sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
