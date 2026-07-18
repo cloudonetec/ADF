@@ -23,17 +23,17 @@
 			],
 			"transformations": [
 				{
-					"name": "castColumns"
+					"name": "cast1"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          OrderDate as date,",
-				"          ProductKey as short,",
+				"          OrderDate as string,",
+				"          ProductKey as string,",
 				"          Country as string,",
 				"          EnglishProductName as string,",
-				"          SalesAmount as double,",
-				"          TaxAmt as double",
+				"          SalesAmount as string,",
+				"          TaxAmt as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -41,11 +41,13 @@
 				"ReadCsv cast(output(",
 				"          OrderDate as date 'dd-MM-yyyy',",
 				"          ProductKey as short,",
+				"          Country as string,",
+				"          EnglishProductName as string,",
 				"          SalesAmount as double,",
 				"          TaxAmt as double",
 				"     ),",
-				"     errors: true) ~> castColumns",
-				"castColumns sink(allowSchemaDrift: true,",
+				"     errors: true) ~> cast1",
+				"cast1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
