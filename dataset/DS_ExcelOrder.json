@@ -1,0 +1,38 @@
+{
+	"name": "DS_ExcelOrder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "OrderDetails",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "OrderDetails.xlsx",
+				"fileSystem": "cloudonestorage"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "OrderId",
+				"type": "String"
+			},
+			{
+				"name": "OrderDate",
+				"type": "String"
+			},
+			{
+				"name": "OrderDetails",
+				"type": "String"
+			},
+			{
+				"name": "BatchDetails",
+				"type": "String"
+			}
+		]
+	}
+}
