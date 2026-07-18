@@ -1,0 +1,60 @@
+{
+	"name": "df015FlattenXfor",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_JsonFlattenXfor",
+						"type": "DatasetReference"
+					},
+					"name": "ReadCsv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQLFlattenJson",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flattenJson"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderId as integer,",
+				"          OrderDate as string,",
+				"          Items as string[]",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'arrayOfDocuments') ~> ReadCsv",
+				"ReadCsv foldDown(unroll(Items),",
+				"     mapColumn(",
+				"          OrderId,",
+				"          OrderDate,",
+				"          Items",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenJson",
+				"flattenJson sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink"
+			]
+		}
+	}
+}

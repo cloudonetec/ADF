@@ -1,0 +1,35 @@
+{
+	"name": "DS_JsonFlattenXfor",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Orders.json",
+				"fileSystem": "cloudonestorage"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"OrderId": {
+					"type": "integer"
+				},
+				"OrderDate": {
+					"type": "string"
+				},
+				"Items": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
