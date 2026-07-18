@@ -15,15 +15,15 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_ASQL",
+						"referenceName": "AzureSqlTable1",
 						"type": "DatasetReference"
 					},
-					"name": "sink"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "sortData"
+					"name": "sort1"
 				}
 			],
 			"scriptLines": [
@@ -38,8 +38,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadCsv",
-				"ReadCsv sort(asc(Country, true)) ~> sortData",
-				"sortData sink(allowSchemaDrift: true,",
+				"ReadCsv sort(desc(Country, true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -48,7 +48,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
