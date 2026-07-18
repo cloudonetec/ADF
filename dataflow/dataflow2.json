@@ -38,7 +38,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadCsv",
-				"ReadCsv filter(Country=='India') ~> filter",
+				"ReadCsv filter(Country=='Italy') ~> filter",
 				"filter sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
