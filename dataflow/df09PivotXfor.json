@@ -39,7 +39,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadCsv",
 				"ReadCsv pivot(groupBy(EnglishProductName),",
-				"     pivotBy(Country, ['India', 'France']),",
+				"     pivotBy(Country, ['India', 'France', 'United States']),",
 				"     {} = sum(SalesAmount),",
 				"     columnNaming: '$N$V',",
 				"     lateral: true) ~> pivotdata",
