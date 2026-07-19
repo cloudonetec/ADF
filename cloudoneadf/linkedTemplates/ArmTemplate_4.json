@@ -303,7 +303,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblPivotXfor"
+					"table": "tblPivot"
 				}
 			},
 			"dependsOn": []

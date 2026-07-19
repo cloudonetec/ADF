@@ -7318,7 +7318,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblPivotXfor"
+					"table": "tblPivot"
 				}
 			},
 			"dependsOn": [
@@ -8771,9 +8771,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
-						"ReadCsv aggregate(groupBy(Country,",
-						"          EnglishProductName,",
-						"          SalesYear = year(OrderDate)),",
+						"ReadCsv aggregate(groupBy(Country),",
 						"     TotalSales = sum(SalesAmount)) ~> aggregate",
 						"aggregate sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -8836,7 +8834,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
 						"ReadCsv pivot(groupBy(EnglishProductName),",
-						"     pivotBy(Country, ['India', 'France']),",
+						"     pivotBy(Country, ['India', 'France', 'United States']),",
 						"     {} = sum(SalesAmount),",
 						"     columnNaming: '$N$V',",
 						"     lateral: true) ~> pivotdata",
