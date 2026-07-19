@@ -2892,7 +2892,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"ReadCsv": {},
-									"sink": {}
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -3613,6 +3613,104 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ppl035FlattenXfor')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df015FlattenXfor",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ReadCsv": {},
+									"sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Transformations"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df015FlattenXfor')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ppl036ParseXfor')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df016ParseXfor",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ReadCsv": {},
+									"sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Transformations"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df016ParseXfor')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pplDemo')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3847,6 +3945,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tblSort"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ASQL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -4043,7 +4162,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblOrderNew"
+					"table": "tblSelectColumn"
 				}
 			},
 			"dependsOn": [
@@ -5395,6 +5514,59 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_CSVOrder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "OrdersNew.csv",
+						"fileSystem": "cloudonestorage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "OrderDate",
+						"type": "String"
+					},
+					{
+						"name": "ProductKey",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "EnglishProductName",
+						"type": "String"
+					},
+					{
+						"name": "SalesAmount",
+						"type": "String"
+					},
+					{
+						"name": "TaxAmt",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_CSVOrderFilter')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6199,6 +6371,49 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ExcelOrder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "OrderDetails",
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "OrderDetails.xlsx",
+						"fileSystem": "cloudonestorage"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "OrderId",
+						"type": "String"
+					},
+					{
+						"name": "OrderDate",
+						"type": "String"
+					},
+					{
+						"name": "OrderDetails",
+						"type": "String"
+					},
+					{
+						"name": "BatchDetails",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_Input')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6221,6 +6436,137 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_JsOrderFlattenXfor')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Orders.json",
+						"fileSystem": "cloudonestorage"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"OrderId": {
+							"type": "integer"
+						},
+						"OrderDate": {
+							"type": "string"
+						},
+						"Items": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_JsonFlattenXfor')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Orders.json",
+						"fileSystem": "cloudonestorage"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"OrderId": {
+							"type": "integer"
+						},
+						"OrderDate": {
+							"type": "string"
+						},
+						"Items": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_JsonStringify')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "EmployeesNew.json",
+						"fileSystem": "cloudonestorage"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"empid": {
+							"type": "integer"
+						},
+						"empname": {
+							"type": "string"
+						},
+						"salary": {
+							"type": "integer"
+						},
+						"phone": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"mobile": {
+										"type": "integer"
+									},
+									"home": {
+										"type": "integer"
+									}
+								}
+							}
+						}
+					}
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
@@ -6639,6 +6985,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQLDF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tblDemo"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_SQLDerivedColumn')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6652,7 +7019,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblOrderNewDerivedCol"
+					"table": "tblDerrived"
 				}
 			},
 			"dependsOn": [
@@ -6674,6 +7041,27 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "tblExistsXfor"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQLFlattenJson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tblFlattenJson"
 				}
 			},
 			"dependsOn": [
@@ -6888,7 +7276,28 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblOrderFilter"
+					"table": "tblFilter"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQLParse')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tblParseOrder"
 				}
 			},
 			"dependsOn": [
@@ -6969,7 +7378,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblSurrogateKeyXfor"
+					"table": "tblSurrogateKey"
 				}
 			},
 			"dependsOn": [
@@ -7250,15 +7659,15 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DS_ASQL",
+								"referenceName": "AzureSqlTable1",
 								"type": "DatasetReference"
 							},
-							"name": "sink"
+							"name": "sink1"
 						}
 					],
 					"transformations": [
 						{
-							"name": "sortData"
+							"name": "sort1"
 						}
 					],
 					"scriptLines": [
@@ -7273,8 +7682,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
-						"ReadCsv sort(asc(Country, true)) ~> sortData",
-						"sortData sink(allowSchemaDrift: true,",
+						"ReadCsv sort(desc(Country, true)) ~> sort1",
+						"sort1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -7283,13 +7692,13 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink"
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_CSVHEADER')]",
-				"[concat(variables('factoryId'), '/datasets/DS_ASQL')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
 		{
@@ -7334,7 +7743,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
-						"ReadCsv filter(Country=='India') ~> filter",
+						"ReadCsv filter(Country=='Italy') ~> filter",
 						"filter sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -7380,7 +7789,7 @@
 					],
 					"transformations": [
 						{
-							"name": "selectcolumns"
+							"name": "selectColumn"
 						}
 					],
 					"scriptLines": [
@@ -7397,13 +7806,13 @@
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
 						"ReadCsv select(mapColumn(",
 						"          OrderDate,",
-						"          Country,",
+						"          ProductKey,",
 						"          EnglishProductName,",
-						"          SalesAmount",
+						"          TaxAmt",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> selectcolumns",
-						"ReadCsv sink(allowSchemaDrift: true,",
+						"     skipDuplicateMapOutputs: true) ~> selectColumn",
+						"selectColumn sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -7463,11 +7872,11 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
-						"ReadCsv derive(Year = year(OrderDate),",
-						"          Month = month(OrderDate),",
-						"          Day = dayOfMonth(OrderDate),",
+						"ReadCsv derive(Day = dayOfMonth(OrderDate),",
 						"          MonthName = toString(OrderDate, 'MMM'),",
-						"          Tax = SalesAmount*0.05) ~> derivedColumn",
+						"          Tax = SalesAmount*0.05,",
+						"          Year = year(OrderDate),",
+						"          Month = month(OrderDate)) ~> derivedColumn",
 						"derivedColumn sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -7513,17 +7922,17 @@
 					],
 					"transformations": [
 						{
-							"name": "castColumns"
+							"name": "cast1"
 						}
 					],
 					"scriptLines": [
 						"source(output(",
-						"          OrderDate as date,",
-						"          ProductKey as short,",
+						"          OrderDate as string,",
+						"          ProductKey as string,",
 						"          Country as string,",
 						"          EnglishProductName as string,",
-						"          SalesAmount as double,",
-						"          TaxAmt as double",
+						"          SalesAmount as string,",
+						"          TaxAmt as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -7531,11 +7940,13 @@
 						"ReadCsv cast(output(",
 						"          OrderDate as date 'dd-MM-yyyy',",
 						"          ProductKey as short,",
+						"          Country as string,",
+						"          EnglishProductName as string,",
 						"          SalesAmount as double,",
 						"          TaxAmt as double",
 						"     ),",
-						"     errors: true) ~> castColumns",
-						"castColumns sink(allowSchemaDrift: true,",
+						"     errors: true) ~> cast1",
+						"cast1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -8108,6 +8519,154 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/df015FlattenXfor')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_JsonFlattenXfor",
+								"type": "DatasetReference"
+							},
+							"name": "ReadCsv"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQLFlattenJson",
+								"type": "DatasetReference"
+							},
+							"name": "sink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flattenJson"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          OrderId as integer,",
+						"          OrderDate as string,",
+						"          Items as string[]",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'arrayOfDocuments') ~> ReadCsv",
+						"ReadCsv foldDown(unroll(Items),",
+						"     mapColumn(",
+						"          OrderId,",
+						"          OrderDate,",
+						"          Items",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> flattenJson",
+						"flattenJson sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_JsonFlattenXfor')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SQLFlattenJson')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df016ParseXfor')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_ExcelOrder",
+								"type": "DatasetReference"
+							},
+							"name": "ReadCsv"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQLParse",
+								"type": "DatasetReference"
+							},
+							"name": "sink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "parsedata"
+						},
+						{
+							"name": "parsejsondata"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          OrderId as integer,",
+						"          OrderDate as date,",
+						"          OrderDetails as string,",
+						"          BatchDetails as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadCsv",
+						"ReadCsv parse(OrderDet = OrderDetails ? (Item as string,",
+						"          Qty as integer,",
+						"          Price as integer),",
+						"     format: 'delimited',",
+						"     columnNamesAsHeader: false,",
+						"     columnDelimiter: '|',",
+						"     nullValue: '') ~> parsedata",
+						"parsedata parse(BatchDet = BatchDetails ? (batchid as integer,",
+						"          site as string),",
+						"     format: 'json',",
+						"     documentForm: 'arrayOfDocuments') ~> parsejsondata",
+						"parsejsondata sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          OrderId,",
+						"          OrderDate,",
+						"          OrderDet = OrderDet.Item,",
+						"          Item = OrderDet.Item,",
+						"          Qty = OrderDet.Qty,",
+						"          Price = OrderDet.Price,",
+						"          batchid = BatchDet.batchid,",
+						"          site = BatchDet.site",
+						"     )) ~> sink"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_ExcelOrder')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SQLParse')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/df07SurrKeyXfor')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -8134,7 +8693,7 @@
 					],
 					"transformations": [
 						{
-							"name": "surrogateKey"
+							"name": "surrogateKey1"
 						}
 					],
 					"scriptLines": [
@@ -8150,9 +8709,9 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> ReadCsv",
 						"ReadCsv keyGenerate(output({1} as long),",
-						"     startAt: 1L,",
-						"     stepValue: 1L) ~> surrogateKey",
-						"surrogateKey sink(allowSchemaDrift: true,",
+						"     startAt: 1001L,",
+						"     stepValue: 1L) ~> surrogateKey1",
+						"surrogateKey1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -8297,417 +8856,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_CSVTranformationfor')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQLPivotXfor')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ppl035FlattenXfor')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df015FlattenXfor",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ReadCsv": {},
-									"sink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Transformations"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df015FlattenXfor')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df015FlattenXfor')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_JsonFlattenXfor",
-								"type": "DatasetReference"
-							},
-							"name": "ReadCsv"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_SQLFlattenJson",
-								"type": "DatasetReference"
-							},
-							"name": "sink"
-						}
-					],
-					"transformations": [
-						{
-							"name": "flattenJson"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          OrderId as integer,",
-						"          OrderDate as string,",
-						"          Items as string[]",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     documentForm: 'arrayOfDocuments') ~> ReadCsv",
-						"ReadCsv foldDown(unroll(Items),",
-						"     mapColumn(",
-						"          OrderId,",
-						"          OrderDate,",
-						"          Items",
-						"     ),",
-						"     skipDuplicateMapInputs: false,",
-						"     skipDuplicateMapOutputs: false) ~> flattenJson",
-						"flattenJson sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_JsonFlattenXfor')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQLFlattenJson')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_JsOrderFlattenXfor')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Orders.json",
-						"fileSystem": "cloudonestorage"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"OrderId": {
-							"type": "integer"
-						},
-						"OrderDate": {
-							"type": "string"
-						},
-						"Items": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_JsonFlattenXfor')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Orders.json",
-						"fileSystem": "cloudonestorage"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"OrderId": {
-							"type": "integer"
-						},
-						"OrderDate": {
-							"type": "string"
-						},
-						"Items": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQLFlattenJson')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_ASQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tblFlattenJson"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ppl036ParseXfor')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df016ParseXfor",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ReadCsv": {},
-									"sink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Transformations"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df016ParseXfor')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df016ParseXfor')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_ExcelOrder",
-								"type": "DatasetReference"
-							},
-							"name": "ReadCsv"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_SQLParse",
-								"type": "DatasetReference"
-							},
-							"name": "sink"
-						}
-					],
-					"transformations": [
-						{
-							"name": "parsedata"
-						},
-						{
-							"name": "parsejsondata"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          OrderId as integer,",
-						"          OrderDate as date,",
-						"          OrderDetails as string,",
-						"          BatchDetails as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> ReadCsv",
-						"ReadCsv parse(OrderDet = OrderDetails ? (Item as string,",
-						"          Qty as integer,",
-						"          Price as integer),",
-						"     format: 'delimited',",
-						"     columnNamesAsHeader: false,",
-						"     columnDelimiter: '|',",
-						"     nullValue: '') ~> parsedata",
-						"parsedata parse(BatchDet = BatchDetails ? (batchid as integer,",
-						"          site as string),",
-						"     format: 'json',",
-						"     documentForm: 'arrayOfDocuments') ~> parsejsondata",
-						"parsejsondata sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          OrderId,",
-						"          OrderDate,",
-						"          OrderDet = OrderDet.Item,",
-						"          Item = OrderDet.Item,",
-						"          Qty = OrderDet.Qty,",
-						"          Price = OrderDet.Price,",
-						"          batchid = BatchDet.batchid,",
-						"          site = BatchDet.site",
-						"     )) ~> sink"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_ExcelOrder')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQLParse')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ExcelOrder')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "OrderDetails",
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "OrderDetails.xlsx",
-						"fileSystem": "cloudonestorage"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "OrderId",
-						"type": "String"
-					},
-					{
-						"name": "OrderDate",
-						"type": "String"
-					},
-					{
-						"name": "OrderDetails",
-						"type": "String"
-					},
-					{
-						"name": "BatchDetails",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQLParse')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_ASQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tblParseOrder"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
 			]
 		}
 	]
