@@ -23,7 +23,7 @@
 			],
 			"transformations": [
 				{
-					"name": "surrogateKey"
+					"name": "surrogateKey1"
 				}
 			],
 			"scriptLines": [
@@ -39,9 +39,9 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadCsv",
 				"ReadCsv keyGenerate(output({1} as long),",
-				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey",
-				"surrogateKey sink(allowSchemaDrift: true,",
+				"     startAt: 1001L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
