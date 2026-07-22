@@ -1,0 +1,23 @@
+{
+	"name": "DS_OrderCsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Migration",
+				"fileSystem": "mydatacon"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
