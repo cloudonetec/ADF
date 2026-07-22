@@ -20,6 +20,9 @@
 		"OnPrem_password": {
 			"value": ""
 		},
+		"SqlServer1_password": {
+			"value": ""
+		},
 		"ADL_properties_typeProperties_url": {
 			"value": "https://adlscloudone.dfs.core.windows.net/"
 		},
@@ -48,6 +51,15 @@
 			"value": "C:\\"
 		},
 		"OnPrem_properties_typeProperties_userId": {
+			"value": "DESKTOP-TN1S8IB\\EUGENE"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "DESKTOP-TN1S8IB"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "TestDB"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
 			"value": "DESKTOP-TN1S8IB\\EUGENE"
 		},
 		"containerUri": {
