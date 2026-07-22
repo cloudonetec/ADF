@@ -1,0 +1,60 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "data1afd"
+		},
+		"ADL_accountKey": {
+			"value": ""
+		},
+		"ADLS_accountKey": {
+			"value": ""
+		},
+		"ASQL_password": {
+			"value": ""
+		},
+		"LS_ASQL_password": {
+			"value": ""
+		},
+		"OnPrem_password": {
+			"value": ""
+		},
+		"ADL_properties_typeProperties_url": {
+			"value": "https://adlscloudone.dfs.core.windows.net/"
+		},
+		"ADLS_properties_typeProperties_url": {
+			"value": "https://adlscloudone.dfs.core.windows.net/"
+		},
+		"ASQL_properties_typeProperties_server": {
+			"value": "clouddemoserver.database.windows.net"
+		},
+		"ASQL_properties_typeProperties_database": {
+			"value": "clouddemo"
+		},
+		"ASQL_properties_typeProperties_userName": {
+			"value": "admin123"
+		},
+		"LS_ASQL_properties_typeProperties_server": {
+			"value": "clouddemoserver.database.windows.net"
+		},
+		"LS_ASQL_properties_typeProperties_database": {
+			"value": "clouddemo"
+		},
+		"LS_ASQL_properties_typeProperties_userName": {
+			"value": "admin123"
+		},
+		"OnPrem_properties_typeProperties_host": {
+			"value": "C:\\"
+		},
+		"OnPrem_properties_typeProperties_userId": {
+			"value": "DESKTOP-TN1S8IB\\EUGENE"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

@@ -1,0 +1,307 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "data1afd"
+		},
+		"ADL_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADL'"
+		},
+		"ADLS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS'"
+		},
+		"ASQL_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ASQL'"
+		},
+		"LS_ASQL_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_ASQL'"
+		},
+		"OnPrem_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnPrem'"
+		},
+		"ADL_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlscloudone.dfs.core.windows.net/"
+		},
+		"ADLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlscloudone.dfs.core.windows.net/"
+		},
+		"ASQL_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "clouddemoserver.database.windows.net"
+		},
+		"ASQL_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "clouddemo"
+		},
+		"ASQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
+		"LS_ASQL_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "clouddemoserver.database.windows.net"
+		},
+		"LS_ASQL_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "clouddemo"
+		},
+		"LS_ASQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
+		"OnPrem_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\"
+		},
+		"OnPrem_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "DESKTOP-TN1S8IB\\EUGENE"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "data1afd_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADL_accountKey": {
+						"value": "[parameters('ADL_accountKey')]"
+					},
+					"ADLS_accountKey": {
+						"value": "[parameters('ADLS_accountKey')]"
+					},
+					"ASQL_password": {
+						"value": "[parameters('ASQL_password')]"
+					},
+					"LS_ASQL_password": {
+						"value": "[parameters('LS_ASQL_password')]"
+					},
+					"ADL_properties_typeProperties_url": {
+						"value": "[parameters('ADL_properties_typeProperties_url')]"
+					},
+					"ADLS_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_properties_typeProperties_url')]"
+					},
+					"ASQL_properties_typeProperties_server": {
+						"value": "[parameters('ASQL_properties_typeProperties_server')]"
+					},
+					"ASQL_properties_typeProperties_database": {
+						"value": "[parameters('ASQL_properties_typeProperties_database')]"
+					},
+					"ASQL_properties_typeProperties_userName": {
+						"value": "[parameters('ASQL_properties_typeProperties_userName')]"
+					},
+					"LS_ASQL_properties_typeProperties_server": {
+						"value": "[parameters('LS_ASQL_properties_typeProperties_server')]"
+					},
+					"LS_ASQL_properties_typeProperties_database": {
+						"value": "[parameters('LS_ASQL_properties_typeProperties_database')]"
+					},
+					"LS_ASQL_properties_typeProperties_userName": {
+						"value": "[parameters('LS_ASQL_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "data1afd_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"OnPrem_password": {
+						"value": "[parameters('OnPrem_password')]"
+					},
+					"OnPrem_properties_typeProperties_host": {
+						"value": "[parameters('OnPrem_properties_typeProperties_host')]"
+					},
+					"OnPrem_properties_typeProperties_userId": {
+						"value": "[parameters('OnPrem_properties_typeProperties_userId')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_6')]"
+			]
+		},
+		{
+			"name": "data1afd_ArmTemplate_8",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_8.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'data1afd_ArmTemplate_7')]"
+			]
+		}
+	]
+}
