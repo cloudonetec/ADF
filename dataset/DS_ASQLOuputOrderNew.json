@@ -1,0 +1,12 @@
+{
+	"name": "DS_ASQLOuputOrderNew",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
