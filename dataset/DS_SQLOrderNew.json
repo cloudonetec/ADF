@@ -1,0 +1,16 @@
+{
+	"name": "DS_SQLOrderNew",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblOrderNew"
+		}
+	}
+}
