@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Loopin",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -41,6 +41,11 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('ReadTableInfo').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Set TableName",
@@ -172,7 +177,7 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "ASQL",
+								"referenceName": "SqlServer1",
 								"type": "LinkedServiceReference"
 							}
 						}
