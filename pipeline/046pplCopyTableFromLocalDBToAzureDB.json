@@ -45,7 +45,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_ASQLTbaleOrderOutPut",
+						"referenceName": "AzureSqlTable3",
 						"type": "DatasetReference"
 					}
 				]
