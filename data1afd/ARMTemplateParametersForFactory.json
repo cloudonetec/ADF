@@ -61,6 +61,18 @@
 		},
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "DESKTOP-TN1S8IB\\EUGENE"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://kv-cloudone.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "clouddemoserver.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "clouddemo"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "admin123"
 		}
 	}
 }
