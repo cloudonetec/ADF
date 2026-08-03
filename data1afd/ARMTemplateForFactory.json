@@ -10234,7 +10234,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblChangeEvent"
+					"table": "tblTestStorageEventTrg"
 				}
 			},
 			"dependsOn": [
