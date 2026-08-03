@@ -10234,7 +10234,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tblStorageEvenTrg"
+					"table": "tblChangeEvent"
 				}
 			},
 			"dependsOn": [
