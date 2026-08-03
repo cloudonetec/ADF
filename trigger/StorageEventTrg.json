@@ -1,0 +1,25 @@
+{
+	"name": "StorageEventTrg",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "0048pplStorageEventTrigger",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/mydatacon/blobs/Files",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/de6e62b7-2ef8-4a08-a852-2cacf3e55e3f/resourceGroups/RG-DataEng/providers/Microsoft.Storage/storageAccounts/adlscloudone",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
