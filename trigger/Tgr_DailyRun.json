@@ -1,0 +1,24 @@
+{
+	"name": "Tgr_DailyRun",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "044pplCopyFromLocalToADLS",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2026-08-03T13:59:00",
+				"timeZone": "W. Central Africa Standard Time"
+			}
+		}
+	}
+}
