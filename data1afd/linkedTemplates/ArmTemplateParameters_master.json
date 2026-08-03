@@ -74,6 +74,9 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "DESKTOP-TN1S8IB\\EUGENE"
 		},
+		"StorageEventTrg_properties_typeProperties_scope": {
+			"value": "/subscriptions/de6e62b7-2ef8-4a08-a852-2cacf3e55e3f/resourceGroups/RG-DataEng/providers/Microsoft.Storage/storageAccounts/adlscloudone"
+		},
 		"containerUri": {
 			"value": ""
 		},
