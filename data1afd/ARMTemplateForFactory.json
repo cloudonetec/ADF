@@ -10141,7 +10141,7 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
-									"wildcardFolderPath": "Files",
+									"wildcardFolderPath": "File",
 									"wildcardFileName": "*csv",
 									"enablePartitionDiscovery": false
 								},
@@ -10259,7 +10259,7 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/mydatacon/blobs/Files",
+					"blobPathBeginsWith": "/mydatacon/blobs/File",
 					"blobPathEndsWith": ".csv",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('StorageEventTrg_properties_typeProperties_scope')]",

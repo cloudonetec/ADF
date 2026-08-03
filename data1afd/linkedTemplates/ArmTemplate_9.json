@@ -510,7 +510,7 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/mydatacon/blobs/Files",
+					"blobPathBeginsWith": "/mydatacon/blobs/File",
 					"blobPathEndsWith": ".csv",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('StorageEventTrg_properties_typeProperties_scope')]",
