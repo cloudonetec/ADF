@@ -48,7 +48,13 @@
 				"inputs": [
 					{
 						"referenceName": "DS_StorageEventTrg",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": {
+								"value": "@pipeline().parameters.fileName",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -59,6 +65,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"fileName": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
