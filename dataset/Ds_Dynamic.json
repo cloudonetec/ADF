@@ -1,0 +1,17 @@
+{
+	"name": "Ds_Dynamic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "mydatacon"
+			}
+		}
+	}
+}

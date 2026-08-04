@@ -1,0 +1,26 @@
+{
+	"name": "DS_DynamicSink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"param_OutputFolder": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().param_OutputFolder",
+					"type": "Expression"
+				},
+				"fileSystem": "mydatacon"
+			}
+		}
+	}
+}

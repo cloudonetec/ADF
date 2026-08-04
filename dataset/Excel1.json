@@ -1,0 +1,31 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Metadata.xlsx",
+				"folderPath": "Metadata",
+				"fileSystem": "mydatacon"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Filename",
+				"type": "String"
+			},
+			{
+				"name": "Filepath",
+				"type": "String"
+			}
+		]
+	}
+}
