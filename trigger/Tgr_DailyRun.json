@@ -2,7 +2,7 @@
 	"name": "Tgr_DailyRun",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -16,7 +16,7 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 1,
-				"startTime": "2026-08-04T09:51:00",
+				"startTime": "2026-08-03T13:59:00",
 				"timeZone": "W. Central Africa Standard Time"
 			}
 		}
