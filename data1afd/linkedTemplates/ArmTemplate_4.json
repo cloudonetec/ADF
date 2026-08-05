@@ -402,6 +402,53 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_OrderStaging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "OrderDate",
+						"type": "date"
+					},
+					{
+						"name": "ProductKey",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EnglishProductName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesAmount",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "TaxAmt",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "OrdersStaging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_OrdersCSV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -689,50 +736,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "tblFlattenJson"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQLInvoiceData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_ASQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "YEAR",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MONTH",
-						"type": "nvarchar"
-					},
-					{
-						"name": "INVOICEID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "COUNTRY",
-						"type": "nvarchar"
-					},
-					{
-						"name": "REGION",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SALES",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "InvoiceData"
 				}
 			},
 			"dependsOn": []
