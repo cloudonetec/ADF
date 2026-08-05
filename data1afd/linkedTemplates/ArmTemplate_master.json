@@ -99,6 +99,10 @@
 			"type": "string",
 			"defaultValue": "DESKTOP-TN1S8IB\\EUGENE"
 		},
+		"StorageEventTrg_properties_0048pplStorageEventTrigger_parameters_fileName": {
+			"type": "string",
+			"defaultValue": "test"
+		},
 		"StorageEventTrg_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/de6e62b7-2ef8-4a08-a852-2cacf3e55e3f/resourceGroups/RG-DataEng/providers/Microsoft.Storage/storageAccounts/adlscloudone"
@@ -396,6 +400,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"StorageEventTrg_properties_0048pplStorageEventTrigger_parameters_fileName": {
+						"value": "[parameters('StorageEventTrg_properties_0048pplStorageEventTrigger_parameters_fileName')]"
 					},
 					"StorageEventTrg_properties_typeProperties_scope": {
 						"value": "[parameters('StorageEventTrg_properties_typeProperties_scope')]"
