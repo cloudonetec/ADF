@@ -2,15 +2,8 @@
 	"name": "Tgr_DailyRun",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "044pplCopyFromLocalToADLS",
-					"type": "PipelineReference"
-				}
-			}
-		],
+		"runtimeState": "Started",
+		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
