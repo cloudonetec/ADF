@@ -8,6 +8,9 @@
 				"pipelineReference": {
 					"referenceName": "0048pplStorageEventTrigger",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"fileName": "test"
 				}
 			}
 		],
